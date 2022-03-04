@@ -1,9 +1,10 @@
 require('dotenv').config();
+
 const { PubSub } = require('@google-cloud/pubsub');
 /**
  * TODO(developer): Uncomment these variables before running the sample.
  */
-const subscriptionNameOrId = 'notification_sub';
+const subscriptionNameOrId = 'new_delivery_sub';
 const timeout = 60;
 
 // Imports the Google Cloud client library
@@ -20,7 +21,7 @@ function listenForMessages() {
     const messageHandler = message => {
         console.log(`Received message ${message.id}:`);
         console.log(`\tData: ${message.data}`);
-        console.log(`\tAttributes: ${message.attributes}`);
+        console.log(`\tAttributes: ${JSON.stringify(message.attributes)}`);
         messageCount += 1;
 
         // "Ack" (acknowledge receipt of) the message

@@ -15,10 +15,20 @@ const pubSubClient = new PubSub();
 async function publishMessage() {
     // Publishes the message as a string, e.g. "Hello, world!" or JSON.stringify(someObject)
     const dataBuffer = Buffer.from(data);
+    const customAttributes = {
+        origin: 'nodejs-sample',
+        username: 'gcp',
+    };
+    const message = {
+        data: dataBuffer,
+        "attributes": customAttributes
+    };
+
+
     try {
         const messageId = await pubSubClient
             .topic(topicNameOrId)
-            .publish(dataBuffer);
+            .publishMessage(message)
         console.log(`Message ${messageId} published.`);
     } catch (error) {
         console.error(`Received error while publishing: ${error.message}`);
